@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  mtproto-proxy:
+    image: mtproto-proxy-with-socks5
+    container_name: mtproto-proxy
+    ports:
+      - "8443:443"
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./redsocks.conf:/etc/redsocks.conf
+    command:
+      - "--port"
+      - "443"
+      - "--secret"
+      - "[您的密钥]"
+      - "--aes-pwd"
+      - "/opt/MTProxy/objs/bin/mtproto-proxy-secret"
+      - "/opt/MTProxy/objs/bin/mtproto-proxy-secret"
+      - "--user"
+      - "nobody"
+      - "--nat-info"
+      - "0.0.0.0:8443"
+      - "--allow-skip-dh"
+      - "--verbosity"
+      - "3"
