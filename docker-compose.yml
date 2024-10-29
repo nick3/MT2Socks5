@@ -2,14 +2,13 @@ version: "3"
 
 services:
   mtproxy:
-    image: ghcr.io/nick3/mt2socks5
+    image: ghcr.io/nick3/mt2socks5:release
     container_name: mtproxy
     ports:
       - "443:443"
     environment:
       - SECRET=your_secret_key
       - TAG=your_proxy_tag
-      - ENABLE_PADDING=1
     cap_add:
       - NET_ADMIN
     volumes:

@@ -25,7 +25,7 @@ This Docker image allows you to run a Telegram MTProto proxy server with all net
 To pull the image from GitHub Container Registry:
 
 ```bash
-docker pull ghcr.io/nick3/mt2socks5
+docker pull ghcr.io/nick3/mt2socks5:release
 ```
 
 ### Running the Container
@@ -38,14 +38,12 @@ docker run -d \
     -p 443:443 \
     -e SECRET=your_secret_key \
     -e TAG=your_proxy_tag \
-    -e ENABLE_PADDING=1 \
-    ghcr.io/nick3/mt2socks5
+    ghcr.io/nick3/mt2socks5:release
 ```
 
 - `-p 443:443`: Maps port 443 of the container to port 443 of the host.
 - `-e SECRET=your_secret_key`: **(Optional)** Sets the secret key clients use to connect. If not provided, a random secret will be generated.
 - `-e TAG=your_proxy_tag`: **(Optional)** Sets the proxy tag obtained from [@MTProxybot](https://t.me/MTProxybot).
-- `-e ENABLE_PADDING=1`: **(Optional)** Enables Random Padding to help bypass ISP detection.
 
 #### Advanced Usage (With SOCKS5 Proxy)
 
@@ -57,8 +55,7 @@ docker run -d \
     -v /path/to/redsocks.conf:/etc/redsocks.conf \
     -e SECRET=your_secret_key \
     -e TAG=your_proxy_tag \
-    -e ENABLE_PADDING=1 \
-    ghcr.io/nick3/mt2socks5
+    ghcr.io/nick3/mt2socks5:release
 ```
 
 - `--cap-add=NET_ADMIN`: Grants the container permissions to modify network settings, necessary for `redsocks`.
@@ -68,7 +65,6 @@ docker run -d \
 
 - `SECRET`: **(Optional)** The secret key clients use to connect. If not set, a random secret will be generated.
 - `TAG`: **(Optional)** The proxy tag obtained from [@MTProxybot](https://t.me/MTProxybot).
-- `ENABLE_PADDING`: **(Optional)** Set to `1` to enable Random Padding. Default is `0` (disabled).
 - `PORT`: **(Optional)** The port the proxy listens on. Default is `443`.
 - `STATS_PORT`: **(Optional)** The port for accessing statistics. Default is `8888`.
 - `WORKERS`: **(Optional)** The number of worker processes. Default is `1`.
@@ -158,14 +154,13 @@ version: "3"
 
 services:
   mtproxy:
-    image: ghcr.io/nick3/mt2socks5
+    image: ghcr.io/nick3/mt2socks5:release
     container_name: mtproxy
     ports:
       - "443:443"
     environment:
       SECRET: your_secret_key
       TAG: your_proxy_tag
-      ENABLE_PADDING: 1
     cap_add:
       - NET_ADMIN
     volumes:
@@ -190,7 +185,6 @@ docker-compose up -d
 
 - **Cannot Connect to Proxy**: Ensure that your firewall allows incoming connections on the specified port and that the container is running.
 - **SOCKS5 Proxy Not Working**: Check that `redsocks.conf` is correctly configured and that the SOCKS5 proxy is reachable from the Docker host.
-- **Random Padding Not Working**: Ensure that `ENABLE_PADDING` is set to `1` and that your secret key in the connection link includes the `dd` prefix.
 - **Proxy Tag Not Working**: Ensure that you have correctly registered your proxy with [@MTProxybot](https://t.me/MTProxybot) and that the `TAG` environment variable is set.
 
 ## License
