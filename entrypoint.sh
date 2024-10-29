@@ -42,7 +42,7 @@ curl -s https://core.telegram.org/getProxySecret -o /opt/MTProxy/proxy-secret
 curl -s https://core.telegram.org/getProxyConfig -o /opt/MTProxy/proxy-multi.conf
 
 # 构建 mtproto-proxy 命令参数
-CMD_ARGS="--port $PORT --mtproto-port $PORT --http-ports $STATS_PORT --secret $SECRET --aes-pwd /opt/MTProxy/proxy-secret /opt/MTProxy/proxy-multi.conf --user $USER -M $WORKERS"
+CMD_ARGS="-u $USER -p $STATS_PORT -H $PORT -S $SECRET --aes-pwd /opt/MTProxy/proxy-secret /opt/MTProxy/proxy-multi.conf -M $WORKERS"
 
 # 如果提供了 TAG，则添加参数
 if [ ! -z "$TAG" ]; then
