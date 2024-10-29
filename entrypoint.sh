@@ -9,6 +9,7 @@ WORKERS=${WORKERS:-1}
 SECRET=${SECRET}
 TAG=${TAG}
 USER=${USER:-nobody}
+USE_SOCKS=${USE_SOCKS:-0}
 
 # 如果未提供 SECRET，则生成一个
 if [ -z "$SECRET" ]; then
@@ -43,7 +44,7 @@ if [ ! -z "$TAG" ]; then
 fi
 
 # 如果映射了 redsocks.conf，则启动 redsocks
-if [ -f /etc/redsocks.conf ]; then
+if [ "$USE_SOCKS" -eq 1 ]; then
 	echo "检测到 /etc/redsocks.conf，启动 redsocks..."
 
 	# 启动 redsocks
