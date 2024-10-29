@@ -1,27 +1,16 @@
-version: '3'
+version: "3"
 
 services:
-  mtproto-proxy:
-    image: mtproto-proxy-with-socks5
-    container_name: mtproto-proxy
+  mtproxy:
+    image: ghcr.io/nick3/mt2socks5
+    container_name: mtproxy
     ports:
-      - "8443:443"
+      - "443:443"
+    environment:
+      - SECRET=your_secret_key
+      - TAG=your_proxy_tag
+      - ENABLE_PADDING=1
     cap_add:
       - NET_ADMIN
     volumes:
-      - ./redsocks.conf:/etc/redsocks.conf
-    command:
-      - "--port"
-      - "443"
-      - "--secret"
-      - "[您的密钥]"
-      - "--aes-pwd"
-      - "/opt/MTProxy/objs/bin/mtproto-proxy-secret"
-      - "/opt/MTProxy/objs/bin/mtproto-proxy-secret"
-      - "--user"
-      - "nobody"
-      - "--nat-info"
-      - "0.0.0.0:8443"
-      - "--allow-skip-dh"
-      - "--verbosity"
-      - "3"
+      - /path/to/redsocks.conf:/etc/redsocks.conf
