@@ -9,18 +9,11 @@ WORKERS=${WORKERS:-1}
 SECRET=${SECRET}
 TAG=${TAG}
 USER=${USER:-nobody}
-ENABLE_PADDING=${ENABLE_PADDING:-0}
 
 # 如果未提供 SECRET，则生成一个
 if [ -z "$SECRET" ]; then
 	echo "未提供 SECRET，生成一个随机的..."
 	SECRET=$(head -c 16 /dev/urandom | xxd -ps)
-fi
-
-# 如果启用 Random padding，则在 SECRET 前加上 'dd'
-if [ "$ENABLE_PADDING" -eq 1 ]; then
-	SECRET="dd${SECRET}"
-	echo "已启用 Random padding。"
 fi
 
 # 显示配置信息
